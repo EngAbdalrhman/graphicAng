@@ -1,0 +1,9 @@
+// :host::ng-deep p-menubar p-component {
+//   background-color: orangered;
+// }
+// .p-menubar .p-component {
+//   background-color: orangered !important;
+// }
+:host::ng-deep .header {
+  background-color: orangered !important;
+}

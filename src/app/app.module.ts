@@ -3,16 +3,24 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { ErrorComponent } from './pages/error/error.component';
+import { LoginComponent } from './pages/login/login.component';
+import { authenticationGuard } from './common/authentication.guard';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent, ErrorComponent],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    FooterComponent,
+    HeaderComponent,
+    LoginComponent,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [authenticationGuard],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
