@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
 import { RippleModule } from 'primeng/ripple';
 import { LoginService } from '../../common/login.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -24,7 +25,7 @@ import { LoginService } from '../../common/login.service';
 export class HeaderComponent implements OnInit {
   items: MenuItem[] | undefined;
 
-  constructor(public loginService: LoginService) {}
+  constructor(public loginService: LoginService, private _route: Router) {}
   ngOnInit() {
     this.items = [
       {
@@ -36,7 +37,7 @@ export class HeaderComponent implements OnInit {
       {
         label: 'Designer',
         icon: 'pi pi-star',
-        routerLink: 'designer',
+        routerLink: 'home/chart',
         // shortcut: '⌘+D',
       },
       {
@@ -46,5 +47,10 @@ export class HeaderComponent implements OnInit {
         // shortcut: '⌘+S',
       },
     ];
+  }
+  logout($event: MouseEvent) {
+    $event?.preventDefault();
+    this.loginService.logOut();
+    this._route.navigate(['/login']);
   }
 }

@@ -1,0 +1,22 @@
+<p-splitter class="split" [style]="{ height: '700px' }" styleClass="mb-5">
+  <ng-template pTemplate>
+    <div class="col flex align-items-center justify-content-center">
+      <div
+        class="container"
+        (mouseup)="shapeEndMove()"
+        (mousemove)="moveShape($event)"
+      >
+        <app-shape
+          (mousedown)="shapeStartMove($event, shapeX)"
+          *ngFor="let shapeX of shapes"
+          [shape]="shapeX"
+        ></app-shape>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate>
+    <div class="col flex align-items-center justify-content-center">
+      Panel 2
+    </div>
+  </ng-template>
+</p-splitter>

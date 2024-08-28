@@ -27,12 +27,15 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
   checked: boolean = false;
-  constructor(private _login: LoginService) {}
+  constructor(private _login: LoginService, private _router: Router) {}
   // binary: boolean = false;
   handleLogin() {
     this._login.logMe(this.username, this.password, this.checked);
     // console.log(this.username);
     // console.log(this.password);
-    console.log(this.checked);
+    // console.log(this.checked);
+    if (this._login.isLogin) {
+      this._router.navigate(['/home']);
+    }
   }
 }

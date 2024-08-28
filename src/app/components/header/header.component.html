@@ -75,7 +75,7 @@
         shape="circle"
       />
       <div>Hello, {{ loginService.userName }}</div>
-      <a href="#"><i class="pi pi-power-off"></i></a>
+      <a href="#" (click)="logout($event)"><i class="pi pi-power-off"></i></a>
     </div>
   </ng-template>
 </p-menubar>

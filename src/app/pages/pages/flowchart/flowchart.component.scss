@@ -1,0 +1,8 @@
+.split {
+  min-height: calc(100vh - 100px) !important;
+}
+.container {
+  position: relative;
+  width: 100%;
+  // overflow: scroll;
+}

@@ -1,0 +1,20 @@
+<svg
+  width="300"
+  height="170"
+  xmlns="http://www.w3.org/2000/svg"
+  *ngIf="shape"
+  [style.top]="shape.y + 'px'"
+  [style.left]="shape.x + 'px'"
+>
+  <rect
+    width="150"
+    height="150"
+    [attr.x]="10"
+    [attr.y]="10"
+    rx="20"
+    ry="20"
+    [attr.fill]="shape.color || 'red'"
+    style="stroke: black; stroke-width: 5; opacity: 0.5"
+  />
+  <text fill="black" [attr.x]="60" [attr.y]="55">{{ label }}</text>
+</svg>
