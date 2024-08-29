@@ -6,4 +6,5 @@ export interface shapeInfo {
   text_color?: string;
   x: number;
   y: number;
+  id?: number;
 }

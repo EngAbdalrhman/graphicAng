@@ -1,15 +1,24 @@
-<p-splitter class="split" [style]="{ height: '700px' }" styleClass="mb-5" [panelSizes]="[20, 80]" >
+<p-button
+  (click)="save()"
+  pButton
+  pRipple
+  label="Save"
+  class="w-full flex justify-content-center center"
+></p-button>
+<p-splitter
+  class="split"
+  [style]="{ height: '700px' }"
+  styleClass="mb-5"
+  [panelSizes]="[20, 80]"
+>
   <ng-template pTemplate>
     <div class="col flex align-items-center justify-content-center">
-      <div
-        class="toolbarArea"
-
-      >
+      <div class="toolbarArea">
         <app-shape
           *ngFor="let tool of toolbar"
           [shape]="tool"
-          draggable = "true"
-          (drag)="drag($event,tool)"
+          draggable="true"
+          (drag)="drag($event, tool)"
         ></app-shape>
       </div>
     </div>
@@ -22,7 +31,7 @@
       (mouseup)="shapeEndMove()"
       (mousemove)="moveShape($event)"
       (dragover)="allowDrag($event)"
-      (drop) = "dropItem($event,canvas)"
+      (drop)="dropItem($event, canvas)"
       #canvas
     >
       <app-shape

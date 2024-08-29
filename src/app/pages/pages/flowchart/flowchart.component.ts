@@ -6,31 +6,44 @@ import { shapeInfo } from './shape/shapeInfo';
   styleUrl: './flowchart.component.scss',
 })
 export class FlowchartComponent {
-  // constructor(){
-  //   localStorage.getItem(this.shapes[0].toString());
-  // }
-  toolbar:shapeInfo[] = [
+  constructor() {
+    // Get the shapes' coordinates from local storage
+    const shapesPlacement = localStorage.getItem('shapesPlacement');
+    if (shapesPlacement) {
+      this.shapes = JSON.parse(shapesPlacement);
+      // Update the shapes' coordinates
+      // this.shapes.forEach((shape) => {
+      //   const shapeCoords = shapes.find((s) => s.id === shape.id);
+      //   if (shapeCoords) {
+      //     shape.x = shapeCoords.x;
+      //     shape.y = shapeCoords.y;
+      //   }
+      // });
+    }
+  }
+  toolbar: shapeInfo[] = [
     // {label: 'Blue', width: 70, height: 50, color: 'blue', x: 5, y: 5},
     // {label: 'red', width: 70, height: 50, color: 'red', x: 5, y: 80},
     {
-    label: 'Rectangle',
-    width: 50,
-    height: 50,
-    color: 'red',
-    text_color: 'white',
-    x: 10,
-    y: 100,
-  },
-  {
-    label: 'Ellipse',
-    width: 50,
-    height: 50,
-    color: 'blue',
-    text_color: 'white',
-    x: 10,
-    y: -100,
-  },
-  { label: 'Shape', width: 50,color:'black', height: 50, x: 10, y: -250 },];
+      label: 'Rectangle',
+      width: 50,
+      height: 50,
+      color: 'red',
+      text_color: 'white',
+      x: 10,
+      y: 100,
+    },
+    {
+      label: 'Ellipse',
+      width: 50,
+      height: 50,
+      color: 'blue',
+      text_color: 'white',
+      x: 10,
+      y: -100,
+    },
+    { label: 'Shape', width: 50, color: 'black', height: 50, x: 10, y: -250 },
+  ];
   shapes: shapeInfo[] = [
     // {
     //   label: 'Rectangle',
@@ -79,28 +92,30 @@ export class FlowchartComponent {
   //   localStorage.setItem(shapeInfo.label + '-x', x.toString());
   //   localStorage.setItem(shapeInfo.label + '-y', y.toString());
   // }
-
+  save() {
+    localStorage.setItem('shapesPlacement', JSON.stringify(this.shapes));
+  }
   // loadObjects(shapeInfo: shapeInfo, x: number, y: number) {
   //   shapeInfo.x = parseInt(localStorage.getItem(shapeInfo.label + '-x') || '0');
   //   shapeInfo.y = parseInt(localStorage.getItem(shapeInfo.label + '-y') || '0');
   // }
-  DragItem : shapeInfo | undefined;
-  drag($event:Event,shape:shapeInfo)
-  {
+  DragItem: shapeInfo | undefined;
+  drag($event: Event, shape: shapeInfo) {
     this.DragItem = shape;
     // console.log(shape);
-    
   }
-  allowDrag($event:Event){
+  allowDrag($event: Event) {
     $event.preventDefault();
   }
-  dropItem($event:DragEvent,canvas:HTMLDivElement){
+  shapeID = 1;
+  dropItem($event: DragEvent, canvas: HTMLDivElement) {
     $event.preventDefault();
-    if(this.DragItem){
-      let newItem:shapeInfo = {...this.DragItem}; // make a clone of item because we don't want to share the same instance of the item 
+    if (this.DragItem) {
+      let newItem: shapeInfo = { ...this.DragItem }; // make a clone of item because we don't want to share the same instance of the item
       let boundery = canvas.getBoundingClientRect();
       newItem.x = $event.x - boundery.x;
       newItem.y = $event.y - boundery.y;
+      newItem.id = this.shapeID++;
       this.shapes.push(newItem);
       this.DragItem = undefined;
     }
