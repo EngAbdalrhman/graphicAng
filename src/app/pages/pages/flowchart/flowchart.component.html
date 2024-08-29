@@ -1,22 +1,36 @@
-<p-splitter class="split" [style]="{ height: '700px' }" styleClass="mb-5">
+<p-splitter class="split" [style]="{ height: '700px' }" styleClass="mb-5" [panelSizes]="[20, 80]" >
   <ng-template pTemplate>
     <div class="col flex align-items-center justify-content-center">
       <div
-        class="container"
-        (mouseup)="shapeEndMove()"
-        (mousemove)="moveShape($event)"
+        class="toolbarArea"
+
       >
         <app-shape
-          (mousedown)="shapeStartMove($event, shapeX)"
-          *ngFor="let shapeX of shapes"
-          [shape]="shapeX"
+          *ngFor="let tool of toolbar"
+          [shape]="tool"
+          draggable = "true"
+          (drag)="drag($event,tool)"
         ></app-shape>
       </div>
     </div>
   </ng-template>
   <ng-template pTemplate>
-    <div class="col flex align-items-center justify-content-center">
-      Panel 2
+    <!-- <div class="col flex align-items-center justify-content-center">
+      Panel 2 -->
+    <div
+      class="container"
+      (mouseup)="shapeEndMove()"
+      (mousemove)="moveShape($event)"
+      (dragover)="allowDrag($event)"
+      (drop) = "dropItem($event,canvas)"
+      #canvas
+    >
+      <app-shape
+        (mousedown)="shapeStartMove($event, shapeX)"
+        *ngFor="let shapeX of shapes"
+        [shape]="shapeX"
+      ></app-shape>
+      <!-- </div> -->
     </div>
   </ng-template>
 </p-splitter>
