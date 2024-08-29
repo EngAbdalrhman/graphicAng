@@ -1,10 +1,17 @@
-<p-button
-  (click)="save()"
-  pButton
-  pRipple
-  label="Save"
-  class="w-full flex justify-content-center center"
-></p-button>
+<div class="w-full flex justify-content-center center">
+  <p-button
+    (click)="save()"
+    pButton
+    label="Save"
+    class="w-full flex justify-content-center center"
+  ></p-button>
+  <p-button
+    (click)="clear()"
+    pButton
+    label="Clear"
+    class="w-full flex justify-content-center center"
+  ></p-button>
+</div>
 <p-splitter
   class="split"
   [style]="{ height: '700px' }"

@@ -120,4 +120,7 @@ export class FlowchartComponent {
       this.DragItem = undefined;
     }
   }
+  clear() {
+    this.shapes = []; // clear the shapes array
+  }
 }
