@@ -1,3 +1,22 @@
 svg {
   position: absolute;
 }
+.anchor {
+  display: none;
+}
+
+.shape:hover .anchor {
+  display: block;
+}
+
+.shape-rect {
+  stroke: black;
+  stroke-width: 5;
+  opacity: 0.5;
+}
+.shown {
+  display: block;
+}
+.hide {
+  display: none;
+}

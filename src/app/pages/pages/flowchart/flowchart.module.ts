@@ -7,9 +7,10 @@ import { SplitterModule } from 'primeng/splitter';
 import { ShapeComponent } from './shape/shape.component';
 import { shapeInfo } from './shape/shapeInfo';
 import { Button } from 'primeng/button';
+import { AnchorComponent } from './anchor/anchor.component';
 
 @NgModule({
-  declarations: [FlowchartComponent, ShapeComponent],
+  declarations: [FlowchartComponent, ShapeComponent, AnchorComponent],
   imports: [CommonModule, FlowchartRoutingModule, SplitterModule, Button],
 })
 export class FlowchartModule {}

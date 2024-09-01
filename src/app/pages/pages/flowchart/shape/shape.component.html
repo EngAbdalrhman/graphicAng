@@ -1,4 +1,5 @@
 <svg
+  #svg
   width="300"
   height="170"
   xmlns="http://www.w3.org/2000/svg"
@@ -7,6 +8,7 @@
   [style.left]="shape.x + 'px'"
 >
   <rect
+    class="shape-rect"
     width="150"
     height="150"
     [attr.x]="10"
@@ -14,7 +16,19 @@
     rx="20"
     ry="20"
     [attr.fill]="shape.color || 'red'"
-    style="stroke: black; stroke-width: 5; opacity: 0.5"
+    (mouseover)="onMouseOverShape()"
+    (mouseout)="onMouseUpShape()"
   />
   <text fill="black" [attr.x]="60" [attr.y]="55">{{ label }}</text>
+  <circle
+    [attr.class]="isShown ? 'shown' : 'hide'"
+    *ngFor="let anchor of anchors; let i = index"
+    [attr.cx]="anchor.x"
+    [attr.cy]="anchor.y"
+    r="5"
+    [attr.fill]="shape.color"
+    [attr.data-id]="i"
+    style="opacity: 0.5"
+    (mousedown)="handleAnchorClick($event, i)"
+  />
 </svg>

@@ -20,11 +20,11 @@ const routes: Routes = [
     ],
   },
   // weired
-  {
-    path: 'login',
-    loadComponent: () =>
-      import('../login/login.component').then((m) => m.LoginComponent),
-  },
+  // {
+  //   path: 'login',
+  //   loadComponent: () =>
+  //     import('../login/login.component').then((m) => m.LoginComponent),
+  // },
   { path: 'about', component: AboutComponent },
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: '**', component: ErrorComponent },

@@ -45,7 +45,13 @@
         (mousedown)="shapeStartMove($event, shapeX)"
         *ngFor="let shapeX of shapes"
         [shape]="shapeX"
-      ></app-shape>
+        (mousemove)="stopDrawing(shapeX.line, $event)"
+        (mouseup)="finishDraw(shapeX.line)"
+      >
+      </app-shape>
+      <!-- (mousedown)="draw(this, $event)" -->
+      <!-- (mouseover)="shapeActive(this)"
+      (mouseout)="shapeInactive($event)" -->
       <!-- </div> -->
     </div>
   </ng-template>

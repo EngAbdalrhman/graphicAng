@@ -7,4 +7,6 @@ export interface shapeInfo {
   x: number;
   y: number;
   id?: number;
+  anchors?: { x: number; y: number }[];
+  line?: SVGLineElement;
 }

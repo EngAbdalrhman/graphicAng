@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component';
-import { PagesComponent } from './pages/pages/pages/pages.component';
-import { PagesModule } from './pages/pages/pages.module';
+// import { LoginComponent } from './pages/login/login.component';
+// import { PagesComponent } from './pages/pages/pages/pages.component';
+// import { PagesModule } from './pages/pages/pages.module';
 import { authenticationGuard } from './common/authentication.guard';
 
 const routes: Routes = [
@@ -22,11 +22,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, { useHash: true }),
-    LoginComponent,
-    PagesModule,
-  ],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

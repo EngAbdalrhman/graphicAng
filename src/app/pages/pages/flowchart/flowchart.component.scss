@@ -13,3 +13,50 @@
   background-color: whitesmoke;
   width: 100%;
 }
+.container::before {
+  background-color: beige;
+}
+.container::after {
+  background-color: azure;
+}
+.app-shape {
+  position: relative;
+}
+
+.connection-points {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+.connection-point {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #666;
+  cursor: pointer;
+}
+
+.top-left {
+  top: 0;
+  left: 0;
+}
+
+.top-right {
+  top: 0;
+  right: 0;
+}
+
+.bottom-left {
+  bottom: 0;
+  left: 0;
+}
+
+.bottom-right {
+  bottom: 0;
+  right: 0;
+}
