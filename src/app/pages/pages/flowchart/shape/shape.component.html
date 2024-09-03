@@ -21,7 +21,7 @@
   />
   <text fill="black" [attr.x]="60" [attr.y]="55">{{ label }}</text>
   <circle
-    [attr.class]="isShown ? 'shown' : 'hide'"
+    [ngClass]="isShown ? 'shown' : 'hide'"
     *ngFor="let anchor of anchors; let i = index"
     [attr.cx]="anchor.x"
     [attr.cy]="anchor.y"
@@ -31,4 +31,5 @@
     style="opacity: 0.5"
     (mousedown)="handleAnchorClick($event, i)"
   />
+  <!-- (mousedown)="onMouseDown($event)" -->
 </svg>

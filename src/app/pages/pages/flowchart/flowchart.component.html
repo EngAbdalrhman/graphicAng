@@ -31,28 +31,25 @@
     </div>
   </ng-template>
   <ng-template pTemplate>
-    <!-- <div class="col flex align-items-center justify-content-center">
-      Panel 2 -->
     <div
-      class="container"
+      class="container canvas"
       (mouseup)="shapeEndMove()"
       (mousemove)="moveShape($event)"
       (dragover)="allowDrag($event)"
       (drop)="dropItem($event, canvas)"
       #canvas
     >
+      <!-- <svg #svg> -->
       <app-shape
-        (mousedown)="shapeStartMove($event, shapeX)"
         *ngFor="let shapeX of shapes"
         [shape]="shapeX"
-        (mousemove)="stopDrawing(shapeX.line, $event)"
-        (mouseup)="finishDraw(shapeX.line)"
-      >
-      </app-shape>
-      <!-- (mousedown)="draw(this, $event)" -->
-      <!-- (mouseover)="shapeActive(this)"
-      (mouseout)="shapeInactive($event)" -->
-      <!-- </div> -->
+        [style.left]="shapeX.x + 'px'"
+        [style.top]="shapeX.y + 'px'"
+        (mousedown)="onMouseDown($event, shapeX)"
+        (startDrawing)="startDrawing($event)"
+        #svg
+      ></app-shape>
+      <!-- </svg> -->
     </div>
   </ng-template>
 </p-splitter>

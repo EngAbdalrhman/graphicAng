@@ -1,4 +1,5 @@
 export interface shapeInfo {
+  style?: any;
   label: string;
   width?: number;
   height?: number;
@@ -7,6 +8,10 @@ export interface shapeInfo {
   x: number;
   y: number;
   id?: number;
-  anchors?: { x: number; y: number }[];
+  anchors?: {
+    x: number;
+    y: number;
+    id: number;
+  }[];
   line?: SVGLineElement;
 }
