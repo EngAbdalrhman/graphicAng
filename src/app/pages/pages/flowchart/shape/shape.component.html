@@ -20,15 +20,4 @@
     (mouseout)="onMouseUpShape()"
   />
   <text fill="black" [attr.x]="60" [attr.y]="55">{{ label }}</text>
-  <!-- <circle
-    [ngClass]="isShown ? 'shown' : 'hide'"
-    *ngFor="let anchor of anchors; let i = index"
-    [attr.cx]="anchor.x"
-    [attr.cy]="anchor.y"
-    r="5"
-    [attr.fill]="shape.color"
-    [attr.data-id]="i"
-    style="opacity: 0.5"
-    (mousedown)="handleAnchorClick($event, i)"
-  /> -->
 </svg>

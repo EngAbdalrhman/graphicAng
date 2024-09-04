@@ -67,10 +67,18 @@ export class FlowchartComponent {
     // this.isShown = false;
     shape.anchorStatus = false;
   }
-  handleAnchorClick($event: MouseEvent, anchorIndex: number, shape: shapeInfo) {
+  handleAnchorClick(
+    $event: MouseEvent,
+    anchorIndex: number,
+    shape: shapeInfo,
+    shapeSvg: SVGElement
+  ) {
     $event.stopPropagation();
     let anchor = this.anchors[anchorIndex];
-    this.startDrawing({ anchor, shape });
+    console.log('a:' + JSON.stringify(anchor));
+    console.log('shape:' + JSON.stringify(shape));
+
+    this.startDrawing({ anchor, shape, shapeSvg });
   }
   shapeStartMove($event: MouseEvent, shape: shapeInfo) {
     $event.preventDefault();
@@ -121,49 +129,7 @@ export class FlowchartComponent {
   }
 
   // ******* Drawing..
-  // draw(e: any, $event: MouseEvent) {
-  //   this.drawing = true;
-  //   this.startPoint = e.target as HTMLElement;
-  //   const startPointAnchor = this.getStartPointAnchor(this.startPoint);
-  //   if (this.endPoint) {
-  //     let endPointAnchor = this.getEndPointAnchor(this.endPoint);
-  //   }
-  // }
-  // draw(event: MouseEvent) {
-  //   const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-  //   line.setAttribute('x1', event.clientX.toString());
-  //   line.setAttribute('y1', event.clientY.toString());
-  //   line.setAttribute('stroke', 'black');
-  //   line.setAttribute('stroke-width', '2');
-  //   this.svg.nativeElement.appendChild(line);
-  //   this.line = line;
-  //   this.drawing = true;
-  // }
 
-  // stopDrawing(line: any, event: MouseEvent) {
-  //   // if (this.drawing) {
-  //   //   this.endPoint = component.target as HTMLElement;
-  //   // draw line between startPoint and endPoint
-  //   // }
-  //   this.line = line;
-  //   if (this.line) {
-  //     this.line.setAttribute('x2', event.clientX.toString());
-  //     this.line.setAttribute('y2', event.clientY.toString());
-  //     this.drawing = false;
-  //   }
-  // }
-  // connectToShape(shape: any, event: MouseEvent) {
-  //   const line = this.line;
-  //   if (line) {
-  //     const shapeRect = shape.getBoundingClientRect();
-  //     const x = shapeRect.left + shapeRect.width / 2;
-  //     const y = shapeRect.top + shapeRect.height / 2;
-  //     // if (x !== line.getAttribute('x1') && y !== line.getAttribute('y1')) {
-  //     line.setAttribute('x2', x.toString());
-  //     line.setAttribute('y2', y.toString());
-  //     // }
-  //   }
-  // }
   onMouseMove = (event: MouseEvent) => {
     if (this.drawing && this.line) {
       console.log('Moving....');
@@ -180,8 +146,8 @@ export class FlowchartComponent {
       console.log('Up.');
 
       this.drawing = false;
-      this.line.setAttribute('x2', event.clientX.toString());
-      this.line.setAttribute('y2', event.clientY.toString());
+      // this.line.setAttribute('x2', event.clientX.toString());
+      // this.line.setAttribute('y2', event.clientY.toString());
 
       document.removeEventListener('mousemove', this.onMouseMove);
       document.removeEventListener('mouseup', this.onMouseUp);
@@ -207,257 +173,41 @@ export class FlowchartComponent {
       //   }
       // }
 
-      // this.line = null;
-      // this.startAnchor = null;
-      // this.startShape = null;
+      this.line = null;
+      this.startAnchor = null;
+      this.startShape = null;
     }
   };
 
-  startDrawing(event: { anchor: any; shape: shapeInfo }) {
+  startDrawing(event: { anchor: any; shape: shapeInfo; shapeSvg: SVGElement }) {
     this.startAnchor = event.anchor;
     this.startShape = event.shape;
-    // this.startShape = anchor.parentNode;
-    // console.log(event.anchor);
-    // console.log(event.shape);
 
     this.drawing = true;
-    const svgRect = this.svg.nativeElement.getBoundingClientRect();
+    const svgRect = event.shapeSvg.getBoundingClientRect();
     const startX = this.startShape!.x + this.startAnchor.x - svgRect.left;
     const startY = this.startShape!.y + this.startAnchor.y - svgRect.top;
 
     let line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     line.setAttribute('x1', startX.toString());
     line.setAttribute('y1', startY.toString());
-    // this.line.setAttribute(
-    //   'x2',
-    //   (this.startShape.x + this.startAnchor.x).toString()
-    // );
-    // this.line.setAttribute(
-    //   'y2',
-    //   (this.startShape.y + this.startAnchor.y).toString()
-    // );
+
     line.setAttribute('stroke', 'black');
     line.setAttribute('stroke-width', '2');
     this.line = line;
+    console.log('x:' + JSON.stringify(line.getAttribute('x1')));
 
-    // this.line.style.display = 'block';
-    // if (this.svg) {
-    this.svg.nativeElement.appendChild(line);
-    // }
-    // this.canvas.nativeElement.appendChild(this.line);
+    event.shapeSvg.appendChild(this.line);
+    this.svg.nativeElement = event.shapeSvg;
+
     console.log('L:' + JSON.stringify(line));
     console.log('S:' + JSON.stringify(this.svg));
     // console.log('C:' + JSON.stringify(this.canvas));
-
     document.addEventListener('mousemove', this.onMouseMove);
     document.addEventListener('mouseup', this.onMouseUp);
   }
-
-  // onMouseDown(event: MouseEvent, shape: shapeInfo) {
-  //   event.preventDefault();
-  //   this.shapeStartMove(event, shape);
-  // }
-
-  // finishDraw(line: any) {
-  //   this.drawing = false;
-  //   // this.line = line;
-  //   if (this.line) {
-  //     this.svg.nativeElement.removeChild(this.line);
-  //     this.line = undefined;
-  //     //anchorData = null;
-  //   }
-  // }
-
-  // ngAfterViewInit() {
-  //   this.svg.nativeElement.addEventListener(
-  //     'mousedown',
-  //     (event: { target: any }) => {
-  //       let anchor = event.target;
-  //       if (anchor.tagName === 'circle') {
-  //         let anchorId = anchor.getAttribute('data-id');
-  //         let anchorData = this.anchors.find(
-  //           (anchor) => anchor.id === parseInt(anchorId, 10)
-  //         );
-  //         if (anchorData) {
-  //           let line = document.createElementNS(
-  //             'http://www.w3.org/2000/svg',
-  //             'line'
-  //           );
-  //           line.setAttribute('x1', anchorData.x.toString());
-  //           line.setAttribute('y1', anchorData.y.toString());
-  //           line.setAttribute('stroke', 'black');
-  //           line.setAttribute('stroke-width', '2');
-  //           this.svg.nativeElement.appendChild(line);
-  //           this.line = line;
-  //         }
-  //       }
-  //     }
-  //   );
-
-  //   document.addEventListener('mousemove', (event: MouseEvent) => {
-  //     if (this.line) {
-  //       this.line.setAttribute('x2', event.clientX.toString());
-  //       this.line.setAttribute('y2', event.clientY.toString());
-  //     }
-  //   });
-
-  //   document.addEventListener('mouseup', () => {
-  //     if (this.line) {
-  //       this.svg.nativeElement.removeChild(this.line);
-  //       this.line = null;
-  //     }
-  //   });
-  // }
-  // ngAfterViewInit() {
-  //   this.svg.nativeElement.addEventListener(
-  //     'mousedown',
-  //     (event: { target: any }) => {
-  //       const shape = event.target;
-  //       if (shape.tagName === 'rect') {
-  //         // handle mouse down event on shape
-  //         const shapeId = shape.getAttribute('data-id');
-  //         const shapeData = this.shapes.find(
-  //           (shape) => shape.id === parseInt(shapeId, 10)
-  //         );
-  //         if (shapeData) {
-  //           // draw line from shape to anchor point
-  //           const anchorPoint = this.getAnchorPoint(shapeData);
-  //           if (anchorPoint) {
-  //             const line = document.createElementNS(
-  //               'http://www.w3.org/2000/svg',
-  //               'line'
-  //             );
-  //             line.setAttribute('x1', shapeData.x.toString());
-  //             line.setAttribute('y1', shapeData.y.toString());
-  //             line.setAttribute('x2', anchorPoint.x.toString());
-  //             line.setAttribute('y2', anchorPoint.y.toString());
-  //             line.setAttribute('stroke', 'black');
-  //             line.setAttribute('stroke-width', '2');
-  //             this.svg.nativeElement.appendChild(line);
-  //           }
-  //         }
-  //       }
-  //     }
-  //   );
-  // }
-  // ngAfterViewInit() {
-  //   this.svg.nativeElement.addEventListener(
-  //     'mousedown',
-  //     (event: { target: any }) => {
-  //       const shape = event.target;
-  //       if (shape.tagName === 'rect') {
-  //         // handle mouse down event on shape
-  //         const shapeId = shape.getAttribute('data-id');
-  //         const shapeData = this.shapes.find(
-  //           (shape) => shape.id === parseInt(shapeId, 10)
-  //         );
-  //         if (shapeData) {
-  //           // draw line from shape to anchor point
-  //           const anchorPoint = this.getAnchorPoint(shapeData);
-  //           if (anchorPoint) {
-  //             this.line = document.createElementNS(
-  //               'http://www.w3.org/2000/svg',
-  //               'line'
-  //             );
-  //             this.line.setAttribute('x1', shapeData.x.toString());
-  //             this.line.setAttribute('y1', shapeData.y.toString());
-  //             // line.setAttribute('x2', anchorPoint.x.toString());
-  //             // line.setAttribute('y2', anchorPoint.y.toString());
-  //             this.line.setAttribute('stroke', 'black');
-  //             this.line.setAttribute('stroke-width', '2');
-  //             this.svg.nativeElement.appendChild(this.line);
-  //           }
-  //         }
-  //       }
-  //     }
-  //   );
-  // }
-
-  // getAnchorPoint(shapeData: any) {
-  //   // implement logic to get anchor point for shape
-  //   // return the anchor point object or null if not found
-  //   // ...
-  //   // const anchorPoint = { x: 0, y: 0 }; // replace with actual logic to get anchor point
-  //   // return anchorPoint;
-  //   return { x: shapeData.x + 10, y: shapeData.y + 10 };
-  // }
-
-  // ngAfterViewInit() {
-  //   this.canvas.nativeElement.addEventListener(
-  //     'mousedown',
-  //     (event: { target: any }) => {
-  //       const shape = event.target;
-  //       if (shape.tagName === 'DIV') {
-  //         // handle mouse down event on shape
-  //         const shapeId = shape.getAttribute('data-id');
-  //         const shapeData = this.shapes.find(
-  //           (shape) => shape.id === parseInt(shapeId, 10)
-  //         );
-  //         if (shapeData) {
-  //           // make shape draggable
-  //           shape.style.cursor = 'move';
-  //           shape.style.position = 'absolute';
-  //           shape.style.top = shapeData.y + 'px';
-  //           shape.style.left = shapeData.x + 'px';
-
-  //           // add event listeners to make shape draggable
-  //           shape.addEventListener(
-  //             'mousemove',
-  //             (event: { clientY: number; clientX: number }) => {
-  //               shape.style.top = shapeData.y + event.clientY + 'px';
-  //               shape.style.left = shapeData.x + event.clientX + 'px';
-  //             }
-  //           );
-  //           shape.addEventListener('mouseup', () => {
-  //             shape.style.cursor = 'default';
-  //           });
-  //         }
-  //       }
-  //     }
-  //   );
-
-  //   this.canvas.nativeElement.addEventListener('dblclick', (event: any) => {
-  //     // connect shapes with lines
-  //     const shape1 = this.shapes[0];
-  //     const shape2 = this.shapes[1];
-  //     const line = document.createElementNS(
-  //       'http://www.w3.org/2000/svg',
-  //       'line'
-  //     );
-  //     line.setAttribute('x1', shape1.x.toString());
-  //     line.setAttribute('y1', shape1.y.toString());
-  //     line.setAttribute('x2', shape2.x.toString());
-  //     line.setAttribute('y2', shape2.y.toString());
-  //     line.setAttribute('stroke', 'black');
-  //     line.setAttribute('stroke-width', '2');
-  //     this.canvas.nativeElement.appendChild(line);
-  //   });
-  // }
-  // ngAfterViewInit() {
-  //   this.shape.nativeElement.addEventListener(
-  //     'mousedown',
-  //     (event: { target: any }) => {
-  //       const anchor = event.target;
-  //       if (anchor.tagName === 'DIV') {
-  //         // handle mouse down event on anchor
-  //         this.startDrawing(anchor);
-  //       }
-  //     }
-  //   );
-  // }
-
   ngAfterViewInit() {
     document.addEventListener('mousemove', this.onMouseMove);
     document.addEventListener('mouseup', this.onMouseUp);
-
-    // this.canvas.nativeElement.addEventListener(
-    //   'mousedown',
-    //   (event: { target: any }) => {
-    //     const anchor = event.target;
-    //     if (anchor.tagName === 'circle') {
-    //       this.startDrawing(anchor);
-    //     }
-    //   }
-    // );
   }
 }

@@ -41,8 +41,8 @@
     >
       <svg
         #svg
-        width="300"
-        height="170"
+        width="100%"
+        height="100%"
         xmlns="http://www.w3.org/2000/svg"
         *ngFor="let shape of shapes"
         [attr.data-id]="shape.id"
@@ -72,7 +72,9 @@
           r="5"
           [attr.fill]="shape.anchorStatus ? 'white' : shape.color"
           [attr.data-id]="i"
-          (mousedown)="handleAnchorClick($event, i, shape)"
+          (mouseover)="onMouseOverShape(shape)"
+          (mousedown)="handleAnchorClick($event, i, shape, $any(svg))"
+          (mouseout)="onMouseUpShape(shape)"
         />
       </svg>
     </div>
