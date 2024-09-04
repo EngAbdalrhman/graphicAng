@@ -165,12 +165,9 @@ export class FlowchartComponent {
   onMouseMove = (event: MouseEvent) => {
     if (this.drawing && this.line) {
       console.log('Moving....');
-      const canvasRect = this.canvas.nativeElement.getBoundingClientRect();
-      const x = event.clientX - canvasRect.left;
-      const y = event.clientY - canvasRect.top;
-      // const svgRect = this.svg.nativeElement.getBoundingClientRect();
-      // const x = event.clientX - svgRect.left;
-      // const y = event.clientY - svgRect.top;
+      const svgRect = this.svg.nativeElement.getBoundingClientRect();
+      const x = event.clientX - svgRect.left;
+      const y = event.clientY - svgRect.top;
       this.line.setAttribute('x2', x.toString());
       this.line.setAttribute('y2', y.toString());
     }
@@ -181,8 +178,8 @@ export class FlowchartComponent {
       console.log('Up.');
 
       this.drawing = false;
-      // this.line.setAttribute('x2', event.clientX.toString());
-      // this.line.setAttribute('y2', event.clientY.toString());
+      this.line.setAttribute('x2', event.clientX.toString());
+      this.line.setAttribute('y2', event.clientY.toString());
 
       document.removeEventListener('mousemove', this.onMouseMove);
       document.removeEventListener('mouseup', this.onMouseUp);
@@ -222,18 +219,13 @@ export class FlowchartComponent {
     // console.log(event.shape);
 
     this.drawing = true;
-    const canvasRect = this.canvas.nativeElement.getBoundingClientRect();
-    const startX = this.startShape!.x + this.startAnchor.x - canvasRect.left;
-    const startY = this.startShape!.y + this.startAnchor.y - canvasRect.top;
-
-    // const svgRect = this.svg.nativeElement.getBoundingClientRect();
-    // const startX = this.startShape!.x + this.startAnchor.x - svgRect.left;
-    // const startY = this.startShape!.y + this.startAnchor.y - svgRect.top;
+    const svgRect = this.svg.nativeElement.getBoundingClientRect();
+    const startX = this.startShape!.x + this.startAnchor.x - svgRect.left;
+    const startY = this.startShape!.y + this.startAnchor.y - svgRect.top;
 
     let line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     line.setAttribute('x1', startX.toString());
     line.setAttribute('y1', startY.toString());
-
     // this.line.setAttribute(
     //   'x2',
     //   (this.startShape.x + this.startAnchor.x).toString()

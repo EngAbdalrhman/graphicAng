@@ -1,4 +1,4 @@
-<!-- <svg
+<svg
   #svg
   width="300"
   height="170"
@@ -20,7 +20,7 @@
     (mouseout)="onMouseUpShape()"
   />
   <text fill="black" [attr.x]="60" [attr.y]="55">{{ label }}</text>
-  <circle
+  <!-- <circle
     [ngClass]="isShown ? 'shown' : 'hide'"
     *ngFor="let anchor of anchors; let i = index"
     [attr.cx]="anchor.x"
@@ -30,5 +30,5 @@
     [attr.data-id]="i"
     style="opacity: 0.5"
     (mousedown)="handleAnchorClick($event, i)"
-  />
-</svg> -->
+  /> -->
+</svg>

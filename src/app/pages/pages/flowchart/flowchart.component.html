@@ -21,26 +21,12 @@
   <ng-template pTemplate>
     <div class="col flex align-items-center justify-content-center">
       <div class="toolbarArea">
-        <svg
+        <app-shape
           *ngFor="let tool of toolbar"
-          width="300"
-          height="170"
-          xmlns="http://www.w3.org/2000/svg"
-          [attr.draggable]="true"
+          [shape]="tool"
+          draggable="true"
           (drag)="drag($event, tool)"
-        >
-          <rect
-            class="shape-rect"
-            width="150"
-            height="150"
-            [attr.x]="10"
-            [attr.y]="10"
-            rx="20"
-            ry="20"
-            [attr.fill]="tool.color || 'red'"
-          />
-          <text fill="black" [attr.x]="60" [attr.y]="55">{{ tool.label }}</text>
-        </svg>
+        ></app-shape>
       </div>
     </div>
   </ng-template>
