@@ -165,14 +165,14 @@ export class FlowchartComponent {
       document.removeEventListener('mousemove', this.onMouseMove);
       document.removeEventListener('mouseup', this.onMouseUp);
 
-      const target = event.target as HTMLElement;
+      let target = event.target as HTMLElement;
       if (target.tagName === 'circle') {
-        const endAnchorId = target.getAttribute('data-id');
-        const endShapeId = target.closest('svg')?.getAttribute('data-id');
-        const endShape = this.shapes.find(
+        let endAnchorId = target.getAttribute('data-id');
+        let endShapeId = target.closest('svg')?.getAttribute('data-id');
+        let endShape = this.shapes.find(
           (shape) => shape.id === parseInt(endShapeId!, 10)
         );
-        const endAnchor = endShape?.anchors?.find(
+        let endAnchor = endShape?.anchors?.find(
           (anchor) => anchor.id === parseInt(endAnchorId!, 10)
         );
 
@@ -181,7 +181,9 @@ export class FlowchartComponent {
           this.line.setAttribute('y2', (endShape.y + endAnchor.y).toString());
         }
       } else {
-        this.svg.nativeElement.removeChild(this.line);
+        if (this.svg && this.svg.nativeElement) {
+          this.svg.nativeElement.removeChild(this.line);
+        }
       }
 
       this.line = null;
@@ -193,6 +195,8 @@ export class FlowchartComponent {
   startDrawing(event: { anchor: any; shape: shapeInfo }) {
     this.startAnchor = event.anchor;
     this.startShape = event.shape;
+    // this.startShape = anchor.parentNode;
+
     this.drawing = true;
 
     this.line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
@@ -206,8 +210,13 @@ export class FlowchartComponent {
     );
     this.line.setAttribute('stroke', 'black');
     this.line.setAttribute('stroke-width', '2');
-    // this.svg.nativeElement.appendChild(this.line);
+    if (this.svg) {
+      this.svg.nativeElement.appendChild(this.line);
+    }
     this.canvas.nativeElement.appendChild(this.line);
+    console.log('L:' + JSON.stringify(this.line));
+    console.log('S:' + JSON.stringify(this.svg));
+    console.log('C:' + JSON.stringify(this.canvas));
 
     document.addEventListener('mousemove', this.onMouseMove);
     document.addEventListener('mouseup', this.onMouseUp);
@@ -393,16 +402,31 @@ export class FlowchartComponent {
   //     this.canvas.nativeElement.appendChild(line);
   //   });
   // }
+  // ngAfterViewInit() {
+  //   this.shape.nativeElement.addEventListener(
+  //     'mousedown',
+  //     (event: { target: any }) => {
+  //       const anchor = event.target;
+  //       if (anchor.tagName === 'DIV') {
+  //         // handle mouse down event on anchor
+  //         this.startDrawing(anchor);
+  //       }
+  //     }
+  //   );
+  // }
+
   ngAfterViewInit() {
-    this.shape.nativeElement.addEventListener(
-      'mousedown',
-      (event: { target: any }) => {
-        const anchor = event.target;
-        if (anchor.tagName === 'DIV') {
-          // handle mouse down event on anchor
-          this.startDrawing(anchor);
-        }
-      }
-    );
+    document.addEventListener('mousemove', this.onMouseMove);
+    document.addEventListener('mouseup', this.onMouseUp);
+
+    // this.canvas.nativeElement.addEventListener(
+    //   'mousedown',
+    //   (event: { target: any }) => {
+    //     const anchor = event.target;
+    //     if (anchor.tagName === 'circle') {
+    //       this.startDrawing(anchor);
+    //     }
+    //   }
+    // );
   }
 }

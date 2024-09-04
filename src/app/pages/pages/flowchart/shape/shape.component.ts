@@ -48,10 +48,10 @@ export class ShapeComponent {
     this.svg.nativeElement.addEventListener(
       'mousedown',
       (event: { target: any }) => {
-        const anchor = event.target;
+        let anchor = event.target;
         if (anchor.tagName === 'circle') {
-          const anchorId = anchor.getAttribute('data-id');
-          const anchorData = this.anchors.find(
+          let anchorId = anchor.getAttribute('data-id');
+          let anchorData = this.anchors.find(
             (anchor) => anchor.id === parseInt(anchorId, 10)
           );
           if (anchorData) {
@@ -62,20 +62,20 @@ export class ShapeComponent {
     );
   }
 
-  public isHoveringAnchor = false;
-  public hoveredAnchorIndex: number | null = null;
+  // public isHoveringAnchor = false;
+  // public hoveredAnchorIndex: number | null = null;
 
-  public onMouseEnterAnchor(index: number) {
-    this.isHoveringAnchor = true;
-    this.hoveredAnchorIndex = index;
-  }
+  // public onMouseEnterAnchor(index: number) {
+  //   this.isHoveringAnchor = true;
+  //   this.hoveredAnchorIndex = index;
+  // }
 
-  public onMouseLeaveAnchor() {
-    this.isHoveringAnchor = false;
-    this.hoveredAnchorIndex = null;
-  }
+  // public onMouseLeaveAnchor() {
+  //   this.isHoveringAnchor = false;
+  //   this.hoveredAnchorIndex = null;
+  // }
 
-  onMouseDown(event: MouseEvent) {
-    event.stopPropagation();
-  }
+  // onMouseDown(event: MouseEvent) {
+  //   event.stopPropagation();
+  // }
 }
