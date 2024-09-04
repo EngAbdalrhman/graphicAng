@@ -14,4 +14,5 @@ export interface shapeInfo {
     id: number;
   }[];
   line?: SVGLineElement;
+  anchorStatus?: boolean;
 }

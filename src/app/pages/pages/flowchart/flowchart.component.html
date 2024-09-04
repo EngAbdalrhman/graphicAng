@@ -60,19 +60,18 @@
           rx="20"
           ry="20"
           [attr.fill]="shape.color || 'red'"
-          (mouseover)="onMouseOverShape()"
-          (mouseout)="onMouseUpShape()"
+          (mouseover)="onMouseOverShape(shape)"
+          (mouseout)="onMouseUpShape(shape)"
         />
         <text fill="black" [attr.x]="60" [attr.y]="55">{{ shape.label }}</text>
         <circle
-          [ngClass]="isShown ? 'shown' : 'hide'"
+          [ngClass]="shape.anchorStatus ? 'shown' : 'hide'"
           *ngFor="let anchor of anchors; let i = index"
           [attr.cx]="anchor.x"
           [attr.cy]="anchor.y"
           r="5"
-          [attr.fill]="isShown ? 'white' : shape.color"
+          [attr.fill]="shape.anchorStatus ? 'white' : shape.color"
           [attr.data-id]="i"
-          style="opacity: 0.5"
           (mousedown)="handleAnchorClick($event, i, shape)"
         />
       </svg>

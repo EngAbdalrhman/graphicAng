@@ -58,12 +58,14 @@ export class FlowchartComponent {
       this.shapes = JSON.parse(shapesPlacement);
     }
   }
-  onMouseOverShape() {
-    this.isShown = true;
+  onMouseOverShape(shape: shapeInfo) {
+    // this.isShown = true;
+    shape.anchorStatus = true;
   }
 
-  onMouseUpShape() {
-    this.isShown = false;
+  onMouseUpShape(shape: shapeInfo) {
+    // this.isShown = false;
+    shape.anchorStatus = false;
   }
   handleAnchorClick($event: MouseEvent, anchorIndex: number, shape: shapeInfo) {
     $event.stopPropagation();
